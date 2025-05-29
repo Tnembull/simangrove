@@ -3,36 +3,58 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class RolePermissionSeeder extends Seeder
 {
-    public function run()
+    public function run(): void
     {
-        // 1. Buat daftar permission
+        // 1. Daftar lengkap permission modular
         $permissions = [
             'manage users',
-            'input data',
-            'review data',
-            'view report',
             'manage master',
+            'input data',
+            'edit data',
+            'delete data',
+            'review data',
+            'verify session',
+            'view report',
+            'export report',
+            'access dashboard',
+            'edit plot',
+            'manage reference data',
         ];
 
         foreach ($permissions as $permission) {
             Permission::firstOrCreate(['name' => $permission]);
         }
 
-        // 2. Buat role
+        // 2. Roles
         $admin     = Role::firstOrCreate(['name' => 'Admin']);
         $surveyor  = Role::firstOrCreate(['name' => 'Surveyor']);
         $pengelola = Role::firstOrCreate(['name' => 'Pengelola']);
 
-        // 3. Assign permissions ke role
-        $admin->syncPermissions(Permission::all());
-        $surveyor->syncPermissions(['input data']);
-        $pengelola->syncPermissions(['review data', 'view report']);
+        // 3. Assign modular permission per role
+        $admin->syncPermissions($permissions);
+
+        $surveyor->syncPermissions([
+            'input data',
+            'edit data',
+            'delete data',
+            'access dashboard',
+        ]);
+
+        $pengelola->syncPermissions([
+            'review data',
+            'verify session',
+            'view report',
+            'export report',
+            'edit plot',
+            'access dashboard',
+        ]);
 
         // 4. Buat user dan assign role
         $adminUser = User::firstOrCreate(
@@ -44,7 +66,7 @@ class RolePermissionSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
-        $adminUser->assignRole($admin);
+        $adminUser->assignRole('Admin');
 
         $surveyorUser = User::firstOrCreate(
             ['email' => 'surveyor@mangrove.test'],
@@ -55,7 +77,7 @@ class RolePermissionSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
-        $surveyorUser->assignRole($surveyor);
+        $surveyorUser->assignRole('Surveyor');
 
         $pengelolaUser = User::firstOrCreate(
             ['email' => 'pengelola@mangrove.test'],
@@ -66,6 +88,6 @@ class RolePermissionSeeder extends Seeder
                 'email_verified_at' => now(),
             ]
         );
-        $pengelolaUser->assignRole($pengelola);
+        $pengelolaUser->assignRole('Pengelola');
     }
 }

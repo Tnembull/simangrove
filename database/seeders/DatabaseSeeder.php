@@ -14,6 +14,8 @@ class DatabaseSeeder extends Seeder
         // Panggil seeder lainnya di sini
         $this->call([
             RolePermissionSeeder::class,
+            AssessmentParameterSeeder::class,
+            MeasurementSeeder::class,
         ]);
     }
 }

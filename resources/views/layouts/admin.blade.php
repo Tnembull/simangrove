@@ -6,32 +6,53 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Mangrove Health') }}</title>
+    <title>Mangrove Check – Health Assessment Dashboard</title>
+    <meta name="description" content="Mangrove Check adalah dashboard pemantauan kesehatan hutan mangrove berbasis data pengukuran lapangan. Memastikan vitalitas hutan dan ketahanan wilayah pesisir.">
+    <meta name="keywords" content="mangrove health monitoring, forest assessment, dashboard mangrove, monitoring ekosistem, coastal resilience, SIPKM">
+    <meta name="author" content="Universitas Lampung">
 
-    <!-- Fonts & Styles -->
+    <!-- SEO Open Graph / Facebook -->
+    <meta property="og:title" content="Mangrove Check – Health Assessment Dashboard">
+    <meta property="og:description" content="Monitoring Forest Vitality, Ensuring Coastal Resilience. Sistem informasi pengukuran kesehatan hutan mangrove.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="{{ asset('img/og-image.png') }}">
+
+    <!-- SEO Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Mangrove Check – Health Assessment Dashboard">
+    <meta name="twitter:description" content="Sistem digital untuk memantau kesehatan hutan mangrove berbasis data lapangan.">
+    <meta name="twitter:image" content="{{ asset('img/og-image.png') }}">
+
+    <!-- SEO Robots -->
+    <meta name="robots" content="index, follow">
+
+    <!-- Styles & Fonts -->
     <link href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,300,400,700,800,900" rel="stylesheet">
     <link href="{{ asset('css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+    <!-- Favicon -->
     <link rel="icon" href="{{ asset('img/favicon.png') }}" type="image/png">
 </head>
 
 <body id="page-top">
     <div id="wrapper">
-        <!-- Sidebar -->
-        @include('layouts.sidebar')
-        <!-- End Sidebar -->
 
-        <!-- Content Wrapper -->
+        {{-- Sidebar --}}
+        @include('layouts.sidebar')
+
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
-                <!-- Topbar -->
+
+                {{-- Topbar --}}
                 <nav class="navbar navbar-expand navbar-dark bg-success topbar mb-4 static-top shadow">
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                         <i class="fa fa-bars"></i>
                     </button>
 
                     <span class="navbar-brand text-white font-weight-bold">
-                        Sistem Informasi Pengukuran Kesehatan Mangrove
+                        Mangrove Check – Monitoring Forest Vitality, Ensuring Coastal Resilience
                     </span>
 
                     <ul class="navbar-nav ml-auto">
@@ -57,47 +78,41 @@
                         </li>
                     </ul>
                 </nav>
-                <!-- End Topbar -->
 
+                {{-- Content --}}
                 <div class="container-fluid">
                     @yield('main-content')
                 </div>
             </div>
 
-            <!-- Footer -->
+            {{-- Footer --}}
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="text-center my-auto">
-                        <span>Sistem Informasi Pengukuran Kesehatan Mangrove – Universitas Lampung &copy;
-                            {{ now()->year }}</span>
+                        <span>Mangrove Check – Universitas Lampung &copy; {{ now()->year }}</span>
                     </div>
                 </div>
             </footer>
         </div>
     </div>
 
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
+    {{-- Scroll & Logout --}}
+    <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
 
-    <!-- Logout Modal -->
+    {{-- Logout Modal --}}
     <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="logoutModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="logoutModalLabel">Yakin ingin keluar?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span>&times;</span></button>
                 </div>
                 <div class="modal-body">Klik "Logout" untuk mengakhiri sesi saat ini.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
                     <a class="btn btn-danger" href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        Logout
-                    </a>
+                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
                     </form>
@@ -106,12 +121,11 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    {{-- Scripts --}}
     <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/jquery-easing/jquery.easing.min.js') }}"></script>
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
     @yield('scripts')
 </body>
-
 </html>
